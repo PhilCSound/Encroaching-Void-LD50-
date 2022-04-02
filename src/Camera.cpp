@@ -3,7 +3,7 @@
 
 Camera::Camera()
 {
-    m_view.setSize(sf::Vector2f(400, 300));
+    m_view.setSize(sf::Vector2f(224, 160));
 }
 
 void Camera::setTargetPosition(sf::Vector2f& pos)
