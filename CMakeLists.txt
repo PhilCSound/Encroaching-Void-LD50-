@@ -1,25 +1,17 @@
 cmake_minimum_required(VERSION 3.15)
 
-project(AlgoViewer)
+project(EncroachingVoid)
 
 option(USE_STATIC_LIBS "Link libraries statically?" OFF)
 option(USE_STATIC_STD_LIBS "Use statically linked standard/runtime libraries? This option must match the one used for SFML." OFF)
 
 set(SOURCE_FILES
 	src/main.cpp
-	src/Application.cpp
-	src/Application.hpp
+	src/Engine.cpp
+	src/Engine.hpp
 	src/State.hpp
-	src/AlgoDisplayState.hpp
-	src/AlgoDisplayState.cpp
-	src/AlgoVisualizer.hpp
-	src/AlgoVisualizer.cpp
-	src/Command.hpp
-	src/LookCommand.hpp
-	src/SwapCommand.hpp
-	src/EnumAnimationState.hpp
-	src/Algorithms.hpp
-	src/Algorithms.cpp)
+	src/InGameState.hpp
+	src/InGameState.cpp)
 
 set(SFML_STATIC_LIBRARIES FALSE)
 set(TGUI_BACKEND SFML)
