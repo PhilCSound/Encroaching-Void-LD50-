@@ -15,7 +15,9 @@ set(SOURCE_FILES
 	src/LightMap.hpp
 	src/LightMap.cpp
 	src/Player.hpp
-	src/Player.cpp)
+	src/Player.cpp
+	src/Map.hpp
+	src/Map.cpp)
 
 set(SFML_STATIC_LIBRARIES FALSE)
 set(TGUI_BACKEND SFML)
