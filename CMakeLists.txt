@@ -17,7 +17,9 @@ set(SOURCE_FILES
 	src/Player.hpp
 	src/Player.cpp
 	src/Map.hpp
-	src/Map.cpp)
+	src/Map.cpp
+	src/Camera.hpp
+	src/Camera.cpp)
 
 set(SFML_STATIC_LIBRARIES FALSE)
 set(TGUI_BACKEND SFML)
