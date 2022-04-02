@@ -4,6 +4,7 @@ LightMap::LightMap(unsigned int width, unsigned int height)
 {
     m_renderText.create(width, height);
     m_sprite.setTexture(m_renderText.getTexture());
+    m_renderText.clear(sf::Color::White);
 }
 
 void LightMap::AddLight(sf::Vector2f& pos, float radias)
