@@ -11,7 +11,7 @@ public:
     void checkBounds(sf::Vector2f& vel, sf::FloatRect& bounds);
 private:
     const sf::Vector2f TILE_SIZE { 16.0f, 16.0f};
-    const sf::Vector2f MAP_BOUNDS { 800.0f, 592.0f};
+    const sf::Vector2f MAP_BOUNDS { 784.0f, 584.0f};
     sf::FloatRect m_collisionBox;
     sf::Texture m_floorTexture;
     sf::Texture m_wallTexture;

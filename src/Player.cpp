@@ -6,7 +6,7 @@ Player::Player()
     m_playerSprite.setTexture(m_playerText);
     m_playerSprite.setOrigin(sf::Vector2f(m_playerText.getSize()) * 0.5f);
     m_playerSprite.setPosition(m_pos);
-    m_hitbox = sf::FloatRect(m_pos.x, m_pos.y, 16.0f,16.0f);
+    m_hitbox = sf::FloatRect(m_pos.x -8, m_pos.y -8, 16.0f,16.0f);
 }
 
 void Player::AddVelocity(sf::Vector2f& velocity)
@@ -18,7 +18,7 @@ void Player::Move(sf::Vector2f newVel)
 {   
     m_pos += newVel;
     m_playerSprite.setPosition(m_pos);
-    m_hitbox = sf::FloatRect(m_pos, sf::Vector2f(16, 16));
+    m_hitbox = sf::FloatRect(m_pos - sf::Vector2f(8,8), sf::Vector2f(16, 16));
 }
 
 void Player::LookAt(sf::Vector2f& pos)
@@ -31,6 +31,13 @@ void Player::LookAt(sf::Vector2f& pos)
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(m_playerSprite, states);
+    sf::RectangleShape x;
+    x.setSize(sf::Vector2f(16,16));
+    x.setPosition(m_hitbox.left, m_hitbox.top);
+    x.setFillColor(sf::Color::Transparent);
+    x.setOutlineColor(sf::Color::Yellow);
+    x.setOutlineThickness(-5.0f);
+    target.draw(x);
 }
 
 sf::Vector2f Player::getPosition() const
