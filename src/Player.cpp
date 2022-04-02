@@ -31,7 +31,7 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
     target.draw(m_playerSprite, states);
 }
 
-const sf::Vector2f Player::getPosition() const
+sf::Vector2f Player::getPosition() const
 {
     return m_pos;
 }

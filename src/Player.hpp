@@ -10,7 +10,7 @@ public:
     void Move();
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     void LookAt(sf::Vector2f& pos);
-    const sf::Vector2f getPosition() const;
+    sf::Vector2f getPosition() const;
 
 private:
     sf::Vector2f m_pos { 300.0f, 300.0f };
