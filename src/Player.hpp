@@ -10,9 +10,10 @@ public:
     void Move();
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     void LookAt(sf::Vector2f& pos);
+    const sf::Vector2f getPosition() const;
 
 private:
-    sf::Vector2f m_pos;
+    sf::Vector2f m_pos { 300.0f, 300.0f };
     sf::Vector2f m_vel;
     float m_angleLooking = 180.0f;
     sf::Texture m_playerText;

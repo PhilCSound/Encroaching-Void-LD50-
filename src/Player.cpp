@@ -5,6 +5,7 @@ Player::Player()
     m_playerText.loadFromFile("resources/gfx/newPlayer.png");
     m_playerSprite.setTexture(m_playerText);
     m_playerSprite.setOrigin(sf::Vector2f(m_playerText.getSize()) * 0.5f);
+    m_playerSprite.setPosition(m_pos);
 }
 
 void Player::AddVelocity(sf::Vector2f& velocity)
@@ -28,4 +29,9 @@ void Player::LookAt(sf::Vector2f& pos)
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(m_playerSprite, states);
+}
+
+const sf::Vector2f Player::getPosition() const
+{
+    return m_pos;
 }
