@@ -4,7 +4,7 @@ Engine::Engine()
 {
 	m_window.create(sf::VideoMode(800, 600, 32), "Encroaching Void");
 	m_window.setFramerateLimit(60);
-	m_window.setVerticalSyncEnabled(false);
+	m_window.setVerticalSyncEnabled(true);
 	m_window.setKeyRepeatEnabled(false);
 	m_isRunning = m_window.isOpen();
 }
