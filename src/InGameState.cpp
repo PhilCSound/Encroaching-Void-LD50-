@@ -14,6 +14,7 @@ void InGameState::OnExit(Engine *eng)
 void InGameState::Draw(sf::RenderWindow &window)
 {
     window.clear(sf::Color::White); //Test
+    window.draw(m_map);
     window.draw(m_player);
     window.draw(m_lightMap, sf::BlendMultiply);
     m_tgui.draw();

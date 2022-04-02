@@ -5,6 +5,7 @@
 #include <random>
 #include "LightMap.hpp"
 #include "Player.hpp"
+#include "Map.hpp"
 
 class InGameState : public State
 {
@@ -28,6 +29,8 @@ private:
 	LightMap m_lightMap;
 	//Player
 	Player m_player;
+	//Map
+	Map m_map;
 	
 	///
 	//	Member Functions
