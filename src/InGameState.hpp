@@ -6,6 +6,7 @@
 #include "LightMap.hpp"
 #include "Player.hpp"
 #include "Map.hpp"
+#include "Camera.hpp"
 
 class InGameState : public State
 {
@@ -31,6 +32,8 @@ private:
 	Player m_player;
 	//Map
 	Map m_map;
+	//Camera
+	Camera m_camera;
 	
 	///
 	//	Member Functions
