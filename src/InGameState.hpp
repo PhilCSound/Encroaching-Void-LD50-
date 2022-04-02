@@ -4,6 +4,7 @@
 #include "TGUI/TGUI.hpp"
 #include <random>
 #include "LightMap.hpp"
+#include "Player.hpp"
 
 class InGameState : public State
 {
@@ -25,8 +26,12 @@ private:
 	tgui::GuiSFML m_tgui;
 	//LightMap
 	LightMap m_lightMap;
+	//Player
+	Player m_player;
 	
 	///
 	//	Member Functions
 	///
+	void HandleKeyPresses(sf::Keyboard::Key key);
+	void HandleKeyReleases(sf::Keyboard::Key key);
 };
