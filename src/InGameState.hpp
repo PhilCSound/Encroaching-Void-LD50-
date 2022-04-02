@@ -3,10 +3,12 @@
 #include "SFML/Graphics.hpp"
 #include "TGUI/TGUI.hpp"
 #include <random>
+#include <vector>
 #include "LightMap.hpp"
 #include "Player.hpp"
 #include "Map.hpp"
 #include "Camera.hpp"
+#include "Enemy.hpp"
 
 class InGameState : public State
 {
@@ -37,7 +39,10 @@ private:
 	//Minimap
 	sf::RenderTexture m_minimap;
 	sf::Sprite m_miniMapSprite; 
-	
+	//Enemys
+	std::vector<Enemy> m_enemylist;
+	sf::Texture m_enemyText;
+
 	///
 	//	Member Functions
 	///
@@ -45,4 +50,6 @@ private:
 	void HandleKeyReleases(sf::Keyboard::Key key);
 	void DrawToMinimap();
 	void CheckCollisions();
+	sf::Vector2f RandomPointNotNearPlayer();
+	void CreateRandomEnemy();
 };

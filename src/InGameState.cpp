@@ -6,6 +6,10 @@ void InGameState::OnEntry(Engine *eng)
     m_randomGenerator.seed(std::random_device{}());
     sf::Vector2u size = eng->GetWindow().getSize();
     m_minimap.create(800, 600);
+    m_enemyText.loadFromFile("resources/gfx/voidPlayer.png");
+    CreateRandomEnemy();
+    CreateRandomEnemy();
+    CreateRandomEnemy();
 }
 
 void InGameState::OnExit(Engine *eng)
@@ -17,6 +21,8 @@ void InGameState::Draw(sf::RenderWindow &window)
     window.clear(sf::Color::White); //Test
     window.setView(m_camera.getView());
     window.draw(m_map);
+    for (auto& enemy : m_enemylist)
+        window.draw(enemy);
     window.draw(m_player);
     window.draw(m_lightMap);
     sf::View miniView;
@@ -130,6 +136,8 @@ void InGameState::DrawToMinimap()
     m_minimap.clear(); //Test
     m_minimap.draw(m_map);
     m_minimap.draw(m_player);
+    for (auto& enemy : m_enemylist)
+        m_minimap.draw(enemy);
     m_minimap.draw(m_lightMap);
     m_minimap.display();
     m_miniMapSprite.setTexture(m_minimap.getTexture());
@@ -142,4 +150,30 @@ void InGameState::CheckCollisions()
         return;
     m_map.checkBounds(vel, m_player.getBounds());
     m_player.Move(vel);
+}
+
+sf::Vector2f InGameState::RandomPointNotNearPlayer()
+{
+    for (int i = 0; i < 8; i++)
+    {
+        std::uniform_int_distribution<> xdist(8,792);
+        std::uniform_int_distribution<> ydist(8,592);
+        
+        float x;
+        float y;
+        x = xdist(m_randomGenerator);
+        y = ydist(m_randomGenerator);
+        if (!m_player.getBounds().intersects(sf::FloatRect(x-8, y-8, 16, 16)))
+            return sf::Vector2f(x, y);
+    }
+    return (sf::Vector2f(-30, -30));
+}
+
+void InGameState::CreateRandomEnemy()
+{
+    sf::Vector2f p = RandomPointNotNearPlayer();
+    if(p.x < 0 || p.y < 0)
+        return;
+    else
+        m_enemylist.push_back(Enemy(p, m_enemyText));    
 }
