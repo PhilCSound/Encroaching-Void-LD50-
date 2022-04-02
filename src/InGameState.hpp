@@ -22,4 +22,11 @@ private:
 	std::mt19937 m_randomGenerator;
 	//TGUI
 	tgui::GuiSFML m_tgui;
+	//LightMap
+	sf::RenderTexture m_lightMap;
+	sf::Sprite m_lightSprite;
+	///
+	//	Member Functions
+	///
+	void UpdateLightMap(sf::Vector2f pos, float radias);
 };
