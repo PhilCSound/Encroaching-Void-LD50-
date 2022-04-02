@@ -5,6 +5,7 @@ void InGameState::OnEntry(Engine *eng)
     m_tgui.setTarget(eng->GetWindow());
     m_randomGenerator.seed(std::random_device{}());
     sf::Vector2u size = eng->GetWindow().getSize();
+    m_minimap.create(800, 600);
 }
 
 void InGameState::OnExit(Engine *eng)
@@ -18,6 +19,21 @@ void InGameState::Draw(sf::RenderWindow &window)
     window.draw(m_map);
     window.draw(m_player);
     window.draw(m_lightMap);
+    sf::View miniView;
+    miniView.setSize(800, 600);
+    miniView.setCenter(400,300);
+    miniView.setViewport(sf::FloatRect(0.7f, 0.05f, 0.25f, 0.25f));
+    sf::RectangleShape CameraBorder;
+    DrawToMinimap();
+    CameraBorder.setFillColor(sf::Color::Transparent);
+    CameraBorder.setOutlineColor(sf::Color::White);
+    CameraBorder.setOutlineThickness(-5.0f);
+    CameraBorder.setSize(sf::Vector2f(800, 600));
+    window.setView(miniView);
+    window.draw(m_miniMapSprite);
+    window.draw(CameraBorder);
+    window.setView(m_camera.getView());
+
     m_tgui.draw();
 }
 
@@ -107,4 +123,14 @@ void InGameState::HandleKeyReleases(sf::Keyboard::Key key)
     default:
         break;
     }
+}
+
+void InGameState::DrawToMinimap()
+{
+    m_minimap.clear(); //Test
+    m_minimap.draw(m_map);
+    m_minimap.draw(m_player);
+    m_minimap.draw(m_lightMap);
+    m_minimap.display();
+    m_miniMapSprite.setTexture(m_minimap.getTexture());
 }

@@ -34,10 +34,14 @@ private:
 	Map m_map;
 	//Camera
 	Camera m_camera;
+	//Minimap
+	sf::RenderTexture m_minimap;
+	sf::Sprite m_miniMapSprite; 
 	
 	///
 	//	Member Functions
 	///
 	void HandleKeyPresses(sf::Keyboard::Key key);
 	void HandleKeyReleases(sf::Keyboard::Key key);
+	void DrawToMinimap();
 };
