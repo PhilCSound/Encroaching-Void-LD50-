@@ -6,6 +6,7 @@ Player::Player()
     m_playerSprite.setTexture(m_playerText);
     m_playerSprite.setOrigin(sf::Vector2f(m_playerText.getSize()) * 0.5f);
     m_playerSprite.setPosition(m_pos);
+    m_hitbox = sf::FloatRect(m_pos.x, m_pos.y, 16.0f,16.0f);
 }
 
 void Player::AddVelocity(sf::Vector2f& velocity)
@@ -13,14 +14,11 @@ void Player::AddVelocity(sf::Vector2f& velocity)
     m_vel += velocity;
 }
 
-void Player::Move()
+void Player::Move(sf::Vector2f newVel)
 {   
-    float invSqrt2 = 0.707106f;
-    if (m_vel.x != 0.0f && m_vel.y != 0.0f)
-        m_pos += m_vel * invSqrt2 * m_moveSpeed;
-    else
-        m_pos += m_vel * m_moveSpeed;
+    m_pos += newVel;
     m_playerSprite.setPosition(m_pos);
+    m_hitbox = sf::FloatRect(m_pos, sf::Vector2f(16, 16));
 }
 
 void Player::LookAt(sf::Vector2f& pos)
@@ -38,4 +36,17 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 sf::Vector2f Player::getPosition() const
 {
     return m_pos;
+}
+
+sf::FloatRect Player::getBounds() const
+{
+    return m_hitbox;
+}
+
+sf::Vector2f Player::getVelocity() const
+{
+    float invSqrt2 = 0.707106f;
+    if (m_vel.x != 0.0f && m_vel.y != 0.0f)
+        return m_vel * invSqrt2 * m_moveSpeed;
+    return m_vel * m_moveSpeed;
 }
