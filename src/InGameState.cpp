@@ -17,14 +17,17 @@ void InGameState::Draw(sf::RenderWindow &window)
     window.setView(m_camera.getView());
     window.draw(m_map);
     window.draw(m_player);
-    window.draw(m_lightMap, sf::BlendMultiply);
+    window.draw(m_lightMap);
     m_tgui.draw();
 }
 
 void InGameState::Update(Engine *eng, sf::Time elapTime)
 {
     m_camera.setTargetPosition(m_player.getPosition());
+    m_lightMap.update();
     m_player.Move();
+    if(m_lightMap.checkCollision(m_player.getPosition(), 5))
+        eng->GetWindow().close();
 }
 
 void InGameState::HandleEvent(sf::Event &event, sf::RenderWindow &window)
