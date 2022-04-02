@@ -11,7 +11,7 @@ public:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     void LookAt(sf::Vector2f& pos);
     sf::Vector2f getPosition() const;
-    sf::FloatRect Player::getBounds() const;
+    sf::FloatRect getBounds() const;
     sf::Vector2f getVelocity() const;
     
 private:
