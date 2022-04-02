@@ -41,7 +41,7 @@ void InGameState::Update(Engine *eng, sf::Time elapTime)
 {
     m_camera.setTargetPosition(m_player.getPosition());
     m_lightMap.update();
-    m_player.Move();
+    CheckCollisions();
     if(m_lightMap.checkCollision(m_player.getPosition(), 5))
         eng->GetWindow().close();
 }
@@ -133,4 +133,13 @@ void InGameState::DrawToMinimap()
     m_minimap.draw(m_lightMap);
     m_minimap.display();
     m_miniMapSprite.setTexture(m_minimap.getTexture());
+}
+
+void InGameState::CheckCollisions()
+{
+    sf::Vector2f vel = m_player.getVelocity();
+    if(vel == sf::Vector2f())
+        return;
+    m_map.checkBounds(vel, m_player.getBounds());
+    m_player.Move(vel);
 }

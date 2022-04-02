@@ -44,4 +44,5 @@ private:
 	void HandleKeyPresses(sf::Keyboard::Key key);
 	void HandleKeyReleases(sf::Keyboard::Key key);
 	void DrawToMinimap();
+	void CheckCollisions();
 };
