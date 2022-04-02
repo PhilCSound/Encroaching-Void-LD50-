@@ -14,8 +14,12 @@ void Player::AddVelocity(sf::Vector2f& velocity)
 }
 
 void Player::Move()
-{
-    m_pos += m_vel;
+{   
+    float invSqrt2 = 0.707106f;
+    if (m_vel.x != 0.0f && m_vel.y != 0.0f)
+        m_pos += m_vel * invSqrt2 * m_moveSpeed;
+    else
+        m_pos += m_vel * m_moveSpeed;
     m_playerSprite.setPosition(m_pos);
 }
 

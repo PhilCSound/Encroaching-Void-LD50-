@@ -13,6 +13,7 @@ public:
     sf::Vector2f getPosition() const;
 
 private:
+    float m_moveSpeed = 2.0f;
     sf::Vector2f m_pos { 300.0f, 300.0f };
     sf::Vector2f m_vel;
     float m_angleLooking = 180.0f;
