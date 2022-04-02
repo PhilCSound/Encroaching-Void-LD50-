@@ -3,6 +3,7 @@
 #include "SFML/Graphics.hpp"
 #include "TGUI/TGUI.hpp"
 #include <random>
+#include "LightMap.hpp"
 
 class InGameState : public State
 {
@@ -23,10 +24,9 @@ private:
 	//TGUI
 	tgui::GuiSFML m_tgui;
 	//LightMap
-	sf::RenderTexture m_lightMap;
-	sf::Sprite m_lightSprite;
+	LightMap m_lightMap;
+	
 	///
 	//	Member Functions
 	///
-	void UpdateLightMap(sf::Vector2f pos, float radias);
 };
