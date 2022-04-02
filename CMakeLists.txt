@@ -13,7 +13,9 @@ set(SOURCE_FILES
 	src/InGameState.hpp
 	src/InGameState.cpp
 	src/LightMap.hpp
-	src/LightMap.cpp)
+	src/LightMap.cpp
+	src/Player.hpp
+	src/Player.cpp)
 
 set(SFML_STATIC_LIBRARIES FALSE)
 set(TGUI_BACKEND SFML)
