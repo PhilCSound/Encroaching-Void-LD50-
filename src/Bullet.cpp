@@ -16,10 +16,18 @@ sf::Vector2f Bullet::getPos()
     return m_pos;
 }
 
+bool Bullet::isDead()
+{
+    return m_isDead;
+}
     
 void Bullet::update(sf::Time elapTime)
 {
     m_pos += m_vel;
+    m_sprite.setPosition(m_pos);
+    m_hitBox = sf::FloatRect(m_pos - m_halfSize, m_halfSize * 2.0f);
+    
+
 }
 
 void Bullet::draw(sf::RenderTarget& target, sf::RenderStates states) const
