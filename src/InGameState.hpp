@@ -52,4 +52,5 @@ private:
 	void CheckCollisions();
 	sf::Vector2f RandomPointNotNearPlayer();
 	void CreateRandomEnemy();
+	sf::Vector2f CreateRandomDirection();
 };

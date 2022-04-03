@@ -21,10 +21,10 @@ void InGameState::Draw(sf::RenderWindow &window)
     window.clear(sf::Color::White); //Test
     window.setView(m_camera.getView());
     window.draw(m_map);
-    for (auto& enemy : m_enemylist)
-        window.draw(enemy);
     window.draw(m_player);
     window.draw(m_lightMap);
+    for (auto& enemy : m_enemylist)
+        window.draw(enemy);
     sf::View miniView;
     miniView.setSize(800, 600);
     miniView.setCenter(400,300);
@@ -49,7 +49,7 @@ void InGameState::Update(Engine *eng, sf::Time elapTime)
     m_lightMap.update();
     CheckCollisions();
     if(m_lightMap.checkCollision(m_player.getPosition(), 5))
-        eng->GetWindow().close();
+        return;
 }
 
 void InGameState::HandleEvent(sf::Event &event, sf::RenderWindow &window)
@@ -146,10 +146,21 @@ void InGameState::DrawToMinimap()
 void InGameState::CheckCollisions()
 {
     sf::Vector2f vel = m_player.getVelocity();
-    if(vel == sf::Vector2f())
-        return;
     m_map.checkBounds(vel, m_player.getBounds());
     m_player.Move(vel);
+    sf::Vector2f playerPos = m_player.getPosition();
+
+    for(auto& enemy : m_enemylist)
+    {
+        enemy.update();
+        if(enemy.changeDir)
+            enemy.AddVelocity(CreateRandomDirection());
+        enemy.AttackInRadias(playerPos);
+        sf::Vector2f ev = enemy.getVelocity();
+        enemy.changeDir = m_map.checkBounds(ev, enemy.getBounds());
+        enemy.Move(ev);
+        m_lightMap.AddLight(enemy.getPosition(), 8);
+    }
 }
 
 sf::Vector2f InGameState::RandomPointNotNearPlayer()
@@ -176,4 +187,31 @@ void InGameState::CreateRandomEnemy()
         return;
     else
         m_enemylist.push_back(Enemy(p, m_enemyText));    
+}
+
+sf::Vector2f InGameState::CreateRandomDirection()
+{
+    std::uniform_int_distribution<> dist(0,7);
+    int dir = dist(m_randomGenerator);
+    switch (dir)
+    {
+        case 0:
+            return sf::Vector2f(0, -1);
+        case 1:
+            return sf::Vector2f(1, -1);
+        case 2:
+            return sf::Vector2f(1, 0);
+        case 3:
+            return sf::Vector2f(1, 1);
+        case 4:
+            return sf::Vector2f(0, 1);
+        case 5:
+            return sf::Vector2f(-1, 1);
+        case 6:
+            return sf::Vector2f(-1, 0);
+        case 7:
+            return sf::Vector2f(-1, -1);
+        default:
+            return sf::Vector2f(0,0);
+    }
 }
