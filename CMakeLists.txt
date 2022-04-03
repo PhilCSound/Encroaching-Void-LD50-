@@ -21,7 +21,9 @@ set(SOURCE_FILES
 	src/Camera.hpp
 	src/Camera.cpp
 	src/Enemy.hpp
-	src/Enemy.cpp)
+	src/Enemy.cpp
+	src/Bullet.hpp
+	src/Bullet.cpp)
 
 set(SFML_STATIC_LIBRARIES FALSE)
 set(TGUI_BACKEND SFML)
