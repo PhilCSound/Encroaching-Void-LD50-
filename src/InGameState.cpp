@@ -28,6 +28,7 @@ void InGameState::Draw(sf::RenderWindow &window)
     window.draw(m_lightMap);
     for (auto& enemy : m_enemylist)
         window.draw(enemy);
+    window.draw(s);
     sf::View miniView;
     miniView.setSize(800, 600);
     miniView.setCenter(400,300);
@@ -70,16 +71,19 @@ void InGameState::HandleEvent(sf::Event &event, sf::RenderWindow &window)
     m_tgui.handleEvent(event);
     sf::Vector2f mousePos;
     sf::Vector2f dir;
-    Bullet b = Bullet(sf::Vector2f(), sf::Vector2f(), m_bulletText);
     switch (event.type)
     {
         case sf::Event::MouseButtonPressed:
             mousePos = window.mapPixelToCoords
                 (sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
             dir = m_player.fireDirection(mousePos);
-            b = Bullet(m_player.getPosition() + dir * 8.0f, dir * 3.0f, m_bulletText);
-            m_playerBullets.push_back(b);
+            //LEFT CLICK
+            if(event.mouseButton.button == sf::Mouse::Button::Left)
+                FireBlaster(dir, 3.0f);
+            else if (event.mouseButton.button == sf::Mouse::Button::Right) 
+                FireCannon(mousePos, 40.0f);
             break;
+
         case sf::Event::MouseMoved:
             mousePos = window.mapPixelToCoords
                 (sf::Vector2i(event.mouseMove.x, event.mouseMove.y));
@@ -193,6 +197,8 @@ void InGameState::CheckCollisions()
     }
     for(auto& enemy : m_enemylist)
     {
+        if (enemy.isDead)
+            break;
         enemy.update();
         if(enemy.changeDir)
             enemy.AddVelocity(CreateRandomDirection());
@@ -200,7 +206,7 @@ void InGameState::CheckCollisions()
         sf::Vector2f ev = enemy.getVelocity();
         enemy.changeDir = m_map.checkBounds(ev, enemy.getBounds());
         enemy.Move(ev);
-        m_lightMap.AddLight(enemy.getPosition(), 8);
+        m_lightMap.AddVoid(enemy.getPosition(), 8);
     }
 }
 
@@ -224,9 +230,9 @@ sf::Vector2f InGameState::RandomPointNotNearPlayer()
 void InGameState::CreateRandomEnemy()
 {
     enemySpawnTimer = sf::Time::Zero;
-    SPAWNTIME *= .90f;
-    if (SPAWNTIME < 3.0)
-        SPAWNTIME = 3.0;
+    SPAWNTIME *= .95f;
+    if (SPAWNTIME < .5)
+        SPAWNTIME = .5;
     sf::Vector2f p = RandomPointNotNearPlayer();
     if(p.x < 0 || p.y < 0)
         return;
@@ -258,5 +264,30 @@ sf::Vector2f InGameState::CreateRandomDirection()
             return sf::Vector2f(-1, -1);
         default:
             return sf::Vector2f(0,0);
+    }
+}
+
+void InGameState::FireBlaster(sf::Vector2f& dir, float ms)
+{
+    Bullet b = Bullet(m_player.getPosition() + dir * 8.0f, dir * ms, m_bulletText);
+    m_playerBullets.push_back(b);
+}
+
+void InGameState::FireCannon(sf::Vector2f dir, float width)
+{
+    m_lightMap.AddLight(dir, width);
+    sf::CircleShape x;
+    x.setPosition(dir);
+    x.setRadius(width);
+    sf::FloatRect zz = x.getGlobalBounds();
+    zz.left = zz.left - width;
+    zz.top = zz.top - width;
+    zz.width = width*1.9f;
+    zz.height = width*1.9f;
+
+    for (auto& e : m_enemylist)
+    {
+        if (zz.contains(e.getPosition()))
+            e.takeDamage();
     }
 }

@@ -41,6 +41,11 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
     */
 }
 
+void Player::update(sf::Time deltaTime)
+{
+}
+
+
 sf::Vector2f Player::getPosition() const
 {
     return m_pos;
@@ -71,4 +76,9 @@ sf::Vector2f Player::fireDirection(sf::Vector2f dir)
 void Player::ClearVelocity()
 {
     m_vel = sf::Vector2f();
+}
+
+float Player::getRotation() const
+{
+    return m_angleLooking;
 }

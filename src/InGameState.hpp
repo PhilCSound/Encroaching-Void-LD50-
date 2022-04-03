@@ -5,6 +5,7 @@
 #include <random>
 #include <vector>
 #include <algorithm>
+#include <cmath>
 #include "LightMap.hpp"
 #include "Player.hpp"
 #include "Map.hpp"
@@ -50,7 +51,9 @@ private:
 	//Timers
 	sf::Time timeAlive;
 	sf::Time enemySpawnTimer;
-	float SPAWNTIME = 15.0f;
+	float SPAWNTIME = 9.0f;
+    sf::RectangleShape s;
+	bool m_drawCannonBlast = false;
 
 	///
 	//	Member Functions
@@ -62,4 +65,6 @@ private:
 	sf::Vector2f RandomPointNotNearPlayer();
 	void CreateRandomEnemy();
 	sf::Vector2f CreateRandomDirection();
+	void FireBlaster(sf::Vector2f& direction, float mSpeed);
+	void FireCannon(sf::Vector2f direction, float mWidth);
 };

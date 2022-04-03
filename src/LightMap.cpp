@@ -13,10 +13,21 @@ void LightMap::AddLight(sf::Vector2f& pos, float radias)
     sf::CircleShape light(30);
     light.setRadius(radias);
     light.setPosition(pos - sf::Vector2f(radias, radias));
-    light.setFillColor(sf::Color(68,34,68,160));
+    light.setFillColor(sf::Color(255, 255, 255, 0));
     m_renderText.draw(light, sf::BlendNone);
     m_renderText.display();
 }
+
+void LightMap::AddVoid(sf::Vector2f& pos, float radias)
+{
+    sf::CircleShape dark(30);
+    dark.setRadius(radias);
+    dark.setPosition(pos - sf::Vector2f(radias, radias));
+    dark.setFillColor(sf::Color(68,34,68,160));
+    m_renderText.draw(dark, sf::BlendNone);
+    m_renderText.display();
+}
+
 
 bool LightMap::checkCollision(sf::Vector2f pos, int radias)
 {

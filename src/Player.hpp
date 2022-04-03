@@ -12,6 +12,8 @@ public:
     void LookAt(sf::Vector2f& pos);
     sf::Vector2f getPosition() const;
     sf::FloatRect getBounds() const;
+    void update(sf::Time deltaTime);
+    float getRotation() const;
     sf::Vector2f getVelocity() const;
     sf::Vector2f fireDirection(sf::Vector2f dir);
     void ClearVelocity();
