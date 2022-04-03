@@ -17,13 +17,24 @@ public:
     sf::Vector2f getVelocity() const;
     sf::Vector2f fireDirection(sf::Vector2f dir);
     void ClearVelocity();
-
+    void AddCorruption(float amt);
+    float GetHowCorrupt();
+    bool canRightClick();
+    void resetRightClick();
+    void fireRightClick();
+    float leftClickCD();
+    bool canLeftClick();
+    void fireLeftClick();
 private:
-    float m_moveSpeed = 2.0f;
+    float m_moveSpeed = 100.0f;
     sf::Vector2f m_pos { 300.0f, 300.0f };
     sf::Vector2f m_vel;
     sf::FloatRect m_hitbox;
     float m_angleLooking = 180.0f;
     sf::Texture m_playerText;
     sf::Sprite m_playerSprite;
+    float corruption = 0.0f;
+    bool m_rightClick = true;
+    float m_leftCoolDownTime = 0.5f;
+    float m_leftTime = 0.5f;
 };

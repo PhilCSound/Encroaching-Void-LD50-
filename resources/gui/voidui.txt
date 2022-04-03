@@ -1,0 +1,53 @@
+Renderer.1 {
+    BackgroundColor = #F5F5F5;
+    BorderColor = black;
+    Borders = (1, 1, 1, 1);
+    FillColor = #006EFF;
+    TextColor = #3C3C3C;
+    TextColorFilled = white;
+    TextureBackground = None;
+    TextureFill = None;
+}
+
+ProgressBar.Corrupt {
+    Maximum = 100;
+    Minimum = 0;
+    Position = (2%, 2%);
+    Size = (15%, 5%);
+    Text = "Corruption %";
+    TextSize = 13;
+    Value = 0;
+
+    Renderer {
+        BackgroundColor = #F5F5F5;
+        BorderColor = black;
+        Borders = (1, 1, 1, 1);
+        FillColor = #006EFF;
+        TextColor = #3C3C3C;
+        TextColorFilled = white;
+        TextureBackground = None;
+        TextureFill = None;
+    }
+}
+
+ProgressBar.Fire {
+    Maximum = 100;
+    Minimum = 0;
+    Position = (2%, 9%);
+    Renderer = &1;
+    Size = (7%, 5%);
+    Text = Fire;
+    TextSize = 13;
+    Value = 0;
+}
+
+ProgressBar.Bless {
+    Maximum = 100;
+    Minimum = 0;
+    Position = (10%, 9%);
+    Renderer = &1;
+    Size = (7%, 5%);
+    Text = Bless;
+    TextSize = 13;
+    Value = 0;
+}

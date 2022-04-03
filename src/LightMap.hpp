@@ -15,6 +15,6 @@ private:
     sf::Sprite m_sprite;
     sf::Image m_image;
     int frameCount = 0;
-    int frameToUpdateImage = 12;
+    int frameToUpdateImage = 20;
 
 };

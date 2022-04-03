@@ -61,7 +61,7 @@ private:
 	void HandleKeyPresses(sf::Keyboard::Key key);
 	void HandleKeyReleases(sf::Keyboard::Key key);
 	void DrawToMinimap();
-	void CheckCollisions();
+	void CheckCollisions(sf::Time dt);
 	sf::Vector2f RandomPointNotNearPlayer();
 	void CreateRandomEnemy();
 	sf::Vector2f CreateRandomDirection();

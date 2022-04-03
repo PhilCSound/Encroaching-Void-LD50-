@@ -24,7 +24,7 @@ sf::Vector2f Bullet::getPos()
     
 void Bullet::update(sf::Time elapTime)
 {
-    m_pos += m_vel;
+    m_pos += m_vel * elapTime.asSeconds();
     m_sprite.setPosition(m_pos);
     m_hitBox = sf::FloatRect(m_pos - m_halfSize, m_halfSize * 2.0f);
 }

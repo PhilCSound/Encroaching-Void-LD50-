@@ -25,7 +25,7 @@ private:
     sf::FloatRect m_hitbox;
     sf::Sprite m_sprite;
     float m_angle = 0.0f;
-    float m_moveSpeed = 0.5f;
+    float m_moveSpeed = 30.0f;
     int m_frameCount = 0;
     int m_changeDirFrame = 60;
     float ATTACK_RADIAS = 100.0f;

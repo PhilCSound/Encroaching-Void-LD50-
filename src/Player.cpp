@@ -43,6 +43,12 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void Player::update(sf::Time deltaTime)
 {
+    corruption -= deltaTime.asSeconds() * .015f;
+    m_leftTime += deltaTime.asSeconds();
+    if (corruption < 0)
+        corruption = 0.0f;
+    if (m_leftTime > m_leftCoolDownTime)
+        m_leftTime = m_leftCoolDownTime;
 }
 
 
@@ -81,4 +87,47 @@ void Player::ClearVelocity()
 float Player::getRotation() const
 {
     return m_angleLooking;
+}
+
+void Player::AddCorruption(float amt)
+{
+    corruption += amt;
+}
+
+float Player::GetHowCorrupt()
+{
+    return corruption;
+}
+
+bool Player::canRightClick()
+{
+    return m_rightClick;
+}
+
+void Player::fireRightClick()
+{
+    m_rightClick = false;
+}
+
+void Player::resetRightClick()
+{
+    m_rightClick = true;
+}
+
+float Player::leftClickCD()
+{
+    return m_leftTime/m_leftCoolDownTime;
+}
+
+bool Player::canLeftClick()
+{
+    if(m_leftTime/m_leftCoolDownTime >= 1.0f)
+        return true;
+    else
+        return false;
+}
+
+void Player::fireLeftClick()
+{
+    m_leftTime = 0.0f;
 }
