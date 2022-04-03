@@ -58,3 +58,17 @@ sf::Vector2f Player::getVelocity() const
         return m_vel * invSqrt2 * m_moveSpeed;
     return m_vel * m_moveSpeed;
 }
+
+sf::Vector2f Player::fireDirection(sf::Vector2f dir)
+{
+    sf::Vector2f dist = dir - m_pos;
+    float len = sqrt(dist.x * dist.x + dist.y * dist.y);
+    dist.x /= len;
+    dist.y /= len;
+    return dist;
+}
+
+void Player::ClearVelocity()
+{
+    m_vel = sf::Vector2f();
+}

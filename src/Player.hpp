@@ -13,7 +13,9 @@ public:
     sf::Vector2f getPosition() const;
     sf::FloatRect getBounds() const;
     sf::Vector2f getVelocity() const;
-    
+    sf::Vector2f fireDirection(sf::Vector2f dir);
+    void ClearVelocity();
+
 private:
     float m_moveSpeed = 2.0f;
     sf::Vector2f m_pos { 300.0f, 300.0f };
