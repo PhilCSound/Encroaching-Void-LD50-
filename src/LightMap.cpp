@@ -13,7 +13,7 @@ void LightMap::AddLight(sf::Vector2f& pos, float radias)
     sf::CircleShape light(30);
     light.setRadius(radias);
     light.setPosition(pos - sf::Vector2f(radias, radias));
-    light.setFillColor(sf::Color(68,34,68,240));
+    light.setFillColor(sf::Color(68,34,68,160));
     m_renderText.draw(light, sf::BlendNone);
     m_renderText.display();
 }
