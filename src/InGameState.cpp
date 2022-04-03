@@ -61,6 +61,8 @@ void InGameState::Update(Engine *eng, sf::Time elapTime)
         return;
     m_playerBullets.erase(std::remove_if(std::begin(m_playerBullets), std::end(m_playerBullets),
             [](Bullet& v) { return v.isDead; }), m_playerBullets.end());
+    m_enemylist.erase(std::remove_if(std::begin(m_enemylist), std::end(m_enemylist),
+            [](Enemy& v) { return v.isDead; }), m_enemylist.end());
 }
 
 void InGameState::HandleEvent(sf::Event &event, sf::RenderWindow &window)
@@ -174,10 +176,13 @@ void InGameState::CheckCollisions()
         if(!bull.isDead)
         {   bool collide = false;
             for(auto& e : m_enemylist)
-            {
+            {   
+                if (e.isDead)
+                    break;
                 collide = bull.getHitbox().intersects(e.getBounds());
                 if(collide)
                 {
+                    e.takeDamage();
                     bull.isDead = true;
                     break;
                 }

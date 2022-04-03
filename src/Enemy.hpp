@@ -16,6 +16,9 @@ public:
     sf::Vector2f getVelocity() const;
     bool changeDir = true;
     void AttackInRadias(sf::Vector2f& pos);
+    bool isDead = false;
+    void takeDamage();
+
 private:
     sf::Vector2f m_pos;
     sf::Vector2f m_vel;
@@ -25,5 +28,7 @@ private:
     float m_moveSpeed = 0.5f;
     int m_frameCount = 0;
     int m_changeDirFrame = 60;
-    const float ATTACK_RADIAS = 100.0f;
+    float ATTACK_RADIAS = 100.0f;
+    bool m_tookDamage = false;
+    int health = 3;
 };

@@ -14,6 +14,10 @@ Enemy::Enemy(sf::Vector2f& pos, sf::Texture& text)
 void Enemy::update()
 {
     ++m_frameCount;
+    if (m_tookDamage)
+        m_tookDamage = false;
+    else
+        m_sprite.setColor(sf::Color::White);
     if (m_frameCount < m_changeDirFrame)
         return;
     m_frameCount = 0;
@@ -76,4 +80,13 @@ void Enemy::AttackInRadias(sf::Vector2f& pos)
     dist.y /= len;
     //Move in direction.
     AddVelocity(dist);
+}
+
+void Enemy::takeDamage()
+{
+    health -= 1;
+    m_tookDamage = true;
+    m_sprite.setColor(sf::Color::Red);
+    if (health <= 0)
+        isDead = true;
 }
