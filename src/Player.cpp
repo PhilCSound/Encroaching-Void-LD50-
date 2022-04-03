@@ -31,13 +31,14 @@ void Player::LookAt(sf::Vector2f& pos)
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(m_playerSprite, states);
-    sf::RectangleShape x;
+    /*sf::RectangleShape x;
     x.setSize(sf::Vector2f(16,16));
     x.setPosition(m_hitbox.left, m_hitbox.top);
     x.setFillColor(sf::Color::Transparent);
     x.setOutlineColor(sf::Color::Yellow);
     x.setOutlineThickness(-5.0f);
     target.draw(x);
+    */
 }
 
 sf::Vector2f Player::getPosition() const
