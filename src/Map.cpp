@@ -24,14 +24,14 @@ void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const
     target.draw(m_floorSprites, states);
 }
 
-void Map::checkBounds(sf::Vector2f& vel, sf::FloatRect& bounds)
+bool Map::checkBounds(sf::Vector2f& vel, sf::FloatRect& bounds)
 {
     sf::Vector2f size = sf::Vector2f(bounds.width, bounds.height);
     sf::Vector2f calcPos = vel + sf::Vector2f(bounds.left, bounds.top);
     sf::FloatRect tempBounds = sf::FloatRect(calcPos, size);
 
     if (m_collisionBox.intersects(tempBounds))
-        return;
+        return false;
     if (calcPos.x <= 0)
         vel.x = 0 - bounds.left;
     if (calcPos.x >= MAP_BOUNDS.x)
@@ -40,4 +40,5 @@ void Map::checkBounds(sf::Vector2f& vel, sf::FloatRect& bounds)
         vel.y = 0 - bounds.top;
     if (calcPos.y >= MAP_BOUNDS.y)
         vel.y -= calcPos.y - MAP_BOUNDS.y;
+    return true;
 }
