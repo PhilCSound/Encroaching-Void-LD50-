@@ -210,7 +210,7 @@ sf::Vector2f InGameState::RandomPointNotNearPlayer()
         float y;
         x = xdist(m_randomGenerator);
         y = ydist(m_randomGenerator);
-        if (!m_player.getBounds().intersects(sf::FloatRect(x-8, y-8, 16, 16)))
+        if (!m_player.getBounds().intersects(sf::FloatRect(x-40, y-40, 80, 80)))
             return sf::Vector2f(x, y);
     }
     return (sf::Vector2f(-30, -30));
@@ -219,7 +219,9 @@ sf::Vector2f InGameState::RandomPointNotNearPlayer()
 void InGameState::CreateRandomEnemy()
 {
     enemySpawnTimer = sf::Time::Zero;
-    SPAWNTIME *= .98f;
+    SPAWNTIME *= .90f;
+    if (SPAWNTIME < 3.0)
+        SPAWNTIME = 3.0;
     sf::Vector2f p = RandomPointNotNearPlayer();
     if(p.x < 0 || p.y < 0)
         return;
