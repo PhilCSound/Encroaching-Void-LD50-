@@ -75,16 +75,6 @@ void Engine::HandleInput()
 				m_isRunning = false;
 				return;
 
-			case sf::Event::LostFocus:
-                if (m_stackOfStates.size())
-				    m_stackOfStates.back()->Pause();
-				break;
-
-			case sf::Event::GainedFocus:
-                if (m_stackOfStates.size())
-				    m_stackOfStates.back()->Unpause();
-				break;
-
 			case sf::Event::Resized:
                 if (m_stackOfStates.size())
 				    m_stackOfStates.back()->HandleEvent(event, m_window);
