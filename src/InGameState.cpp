@@ -5,6 +5,17 @@ void InGameState::OnEntry(Engine *eng)
     m_tgui.setTarget(eng->GetWindow());
     m_tgui.loadWidgetsFromFile("resources/gui/voidui.txt");
     m_tgui.get<tgui::Button>("Replay")->onPress(&InGameState::Restart, this);
+	song.openFromFile("resources/audio/LD50 Song.wav");
+    song.setLoop(true);
+    song.play();
+    song.setVolume(23.0f);
+    AHbuffer.loadFromFile("resources/audio/Bless.wav");
+    shootBuffer.loadFromFile("resources/audio/Fire.wav");
+    ahSound.setBuffer(AHbuffer);
+    ahSound.setVolume(25.0f);
+    shootSound.setBuffer(shootBuffer);
+    shootSound.setVolume(18.0f);
+
     m_randomGenerator.seed(std::random_device{}());
     sf::Vector2u size = eng->GetWindow().getSize();
     m_minimap.create(800, 600);
@@ -26,8 +37,7 @@ void InGameState::OnExit(Engine *eng)
 
 void InGameState::Draw(sf::RenderWindow &window)
 {
-    if(!m_player.isDead)
-    {
+
     window.clear(sf::Color::White); //Test
     window.setView(m_camera.getView());
     window.draw(m_map);
@@ -57,7 +67,6 @@ void InGameState::Draw(sf::RenderWindow &window)
     else
         m_tgui.get<tgui::ProgressBar>("Bless")->setValue(0);
     m_tgui.get<tgui::ProgressBar>("Fire")->setValue(100 * m_player.leftClickCD());
-    }
     m_tgui.draw();
 }
 
@@ -312,6 +321,7 @@ void InGameState::FireBlaster(sf::Vector2f& dir, float ms)
 {
     if (!m_player.canLeftClick())
         return;
+    shootSound.play();
     m_player.fireLeftClick();
     Bullet b = Bullet(m_player.getPosition() + dir * 8.0f, dir * ms, m_bulletText);
     m_playerBullets.push_back(b);
@@ -321,6 +331,7 @@ void InGameState::FireCannon(sf::Vector2f dir, float width)
 {  
     if(!m_player.canRightClick())
         return;
+    ahSound.play();
     m_player.fireRightClick();
     m_lightMap.AddLight(dir, width);
     sf::CircleShape x;

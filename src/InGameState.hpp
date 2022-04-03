@@ -1,6 +1,7 @@
 #pragma once
 #include "State.hpp"
 #include "SFML/Graphics.hpp"
+#include "SFML/Audio.hpp"
 #include "TGUI/TGUI.hpp"
 #include <random>
 #include <vector>
@@ -60,6 +61,11 @@ private:
 	float shaderTime = 0.0f;
 	float shaderTimeInSec = 60.0f;
 	bool gameOver = false;
+	sf::Music song;
+	sf::SoundBuffer AHbuffer;
+	sf::SoundBuffer shootBuffer;
+	sf::Sound ahSound;
+	sf::Sound shootSound;
 	///
 	//	Member Functions
 	///
