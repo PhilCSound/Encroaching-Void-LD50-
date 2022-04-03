@@ -9,12 +9,13 @@ public:
     void update(sf::Time elapTime);
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     sf::Vector2f getPos();
-    bool isDead();
+    sf::FloatRect getHitbox();
+    bool isDead = false;
+
 private:
     sf::Vector2f m_pos;
     sf::Vector2f m_vel;
     sf::Vector2f m_halfSize;
     sf::FloatRect m_hitBox;
     sf::Sprite m_sprite;
-    bool m_isDead = false;
 };
