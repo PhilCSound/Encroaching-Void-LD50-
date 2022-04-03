@@ -9,6 +9,11 @@ void InGameState::OnEntry(Engine *eng)
     m_minimap.create(800, 600);
     m_enemyText.loadFromFile("resources/gfx/voidPlayer.png");
     m_bulletText.loadFromFile("resources/gfx/Bullet.png");
+    m_noise.loadFromFile("resources/gfx/noiseTexture.png");
+    m_noise.setRepeated(true);
+    m_voidShader.loadFromFile("resources/shader/void.frag", sf::Shader::Fragment);
+    m_voidShader.setUniform("noiseText", m_noise);
+    m_voidShader.setUniform("texture", sf::Shader::CurrentTexture);
     CreateRandomEnemy();
     CreateRandomEnemy();
     CreateRandomEnemy();
@@ -26,10 +31,9 @@ void InGameState::Draw(sf::RenderWindow &window)
     window.draw(m_player);
     for (auto& bull : m_playerBullets)
         window.draw(bull);
-    window.draw(m_lightMap);
+    window.draw(m_lightMap, &m_voidShader);
     for (auto& enemy : m_enemylist)
         window.draw(enemy);
-    window.draw(s);
     sf::View miniView;
     miniView.setSize(800, 600);
     miniView.setCenter(400,300);
@@ -49,7 +53,6 @@ void InGameState::Draw(sf::RenderWindow &window)
         m_tgui.get<tgui::ProgressBar>("Bless")->setValue(100);
     else
         m_tgui.get<tgui::ProgressBar>("Bless")->setValue(0);
-    
     m_tgui.get<tgui::ProgressBar>("Fire")->setValue(100 * m_player.leftClickCD());
     m_tgui.draw();
 }
@@ -59,6 +62,7 @@ void InGameState::Update(Engine *eng, sf::Time elapTime)
     timeAlive += elapTime;
     enemySpawnTimer += elapTime;
     m_player.update(elapTime);
+    UpdateShader(elapTime);
     if(enemySpawnTimer.asSeconds() > SPAWNTIME)
         CreateRandomEnemy();
     for(auto& b : m_playerBullets)
@@ -170,10 +174,18 @@ void InGameState::DrawToMinimap()
 {
     m_minimap.clear(); //Test
     m_minimap.draw(m_map);
+    sf::RectangleShape s;
+    s.setSize(sf::Vector2f(16, 16));
+    s.setFillColor(sf::Color::Red);
+    s.setOrigin(8,8);
+
+    m_minimap.draw(m_lightMap);
     m_minimap.draw(m_player);
     for (auto& enemy : m_enemylist)
-        m_minimap.draw(enemy);
-    m_minimap.draw(m_lightMap);
+    {
+        s.setPosition(enemy.getPosition());
+        m_minimap.draw(s);
+    }
     m_minimap.display();
     m_miniMapSprite.setTexture(m_minimap.getTexture());
 }
@@ -321,3 +333,17 @@ void InGameState::FireCannon(sf::Vector2f dir, float width)
         }
     }
 }
+
+void InGameState::UpdateShader(sf::Time dt)
+{
+    shaderTime += dt.asSeconds();
+    if (shaderTime >= shaderTimeInSec)
+    {
+        m_voidShader.setUniform("iTime", 1.0f);
+        shaderTime = 0.0f;
+    }
+    else
+        m_voidShader.setUniform("iTime", shaderTime/shaderTimeInSec);
+
+}
+

@@ -52,8 +52,12 @@ private:
 	sf::Time timeAlive;
 	sf::Time enemySpawnTimer;
 	float SPAWNTIME = 9.0f;
-    sf::RectangleShape s;
 	bool m_drawCannonBlast = false;
+	//SHADER
+	sf::Texture m_noise;
+	sf::Shader m_voidShader;
+	float shaderTime = 0.0f;
+	float shaderTimeInSec = 60.0f;
 
 	///
 	//	Member Functions
@@ -67,4 +71,5 @@ private:
 	sf::Vector2f CreateRandomDirection();
 	void FireBlaster(sf::Vector2f& direction, float mSpeed);
 	void FireCannon(sf::Vector2f direction, float mWidth);
+	void UpdateShader(sf::Time dt);
 };

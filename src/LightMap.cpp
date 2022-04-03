@@ -23,7 +23,7 @@ void LightMap::AddVoid(sf::Vector2f& pos, float radias)
     sf::CircleShape dark(30);
     dark.setRadius(radias);
     dark.setPosition(pos - sf::Vector2f(radias, radias));
-    dark.setFillColor(sf::Color(68,34,68,160));
+    dark.setFillColor(sf::Color(68,34,68, 230));
     m_renderText.draw(dark, sf::BlendNone);
     m_renderText.display();
 }
