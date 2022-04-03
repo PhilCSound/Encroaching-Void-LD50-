@@ -52,13 +52,15 @@ void InGameState::Update(Engine *eng, sf::Time elapTime)
     enemySpawnTimer += elapTime;
     if(enemySpawnTimer.asSeconds() > SPAWNTIME)
         CreateRandomEnemy();
-    for (auto& bull : m_playerBullets)
-        bull.update(elapTime);
+    for(auto& b : m_playerBullets)
+        b.update(elapTime);
     m_camera.setTargetPosition(m_player.getPosition());
     m_lightMap.update();
     CheckCollisions();
     if(m_lightMap.checkCollision(m_player.getPosition(), 5))
         return;
+    m_playerBullets.erase(std::remove_if(std::begin(m_playerBullets), std::end(m_playerBullets),
+            [](Bullet& v) { return v.isDead; }), m_playerBullets.end());
 }
 
 void InGameState::HandleEvent(sf::Event &event, sf::RenderWindow &window)
@@ -166,6 +168,24 @@ void InGameState::CheckCollisions()
     m_player.Move(vel);
     sf::Vector2f playerPos = m_player.getPosition();
 
+//Player bullet collisions with map then enemies
+    for (auto& bull : m_playerBullets)
+    {
+        if(!bull.isDead)
+        {   bool collide = false;
+            for(auto& e : m_enemylist)
+            {
+                collide = bull.getHitbox().intersects(e.getBounds());
+                if(collide)
+                {
+                    bull.isDead = true;
+                    break;
+                }
+            }
+            if (!collide)
+                bull.isDead = m_map.checkBounds(sf::Vector2f(), bull.getHitbox());
+        }
+    }
     for(auto& enemy : m_enemylist)
     {
         enemy.update();

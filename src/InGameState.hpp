@@ -4,6 +4,7 @@
 #include "TGUI/TGUI.hpp"
 #include <random>
 #include <vector>
+#include <algorithm>
 #include "LightMap.hpp"
 #include "Player.hpp"
 #include "Map.hpp"
