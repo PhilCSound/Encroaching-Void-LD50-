@@ -7,6 +7,7 @@ void InGameState::OnEntry(Engine *eng)
     sf::Vector2u size = eng->GetWindow().getSize();
     m_minimap.create(800, 600);
     m_enemyText.loadFromFile("resources/gfx/voidPlayer.png");
+    m_bulletText.loadFromFile("resources/gfx/Bullet.png");
     CreateRandomEnemy();
     CreateRandomEnemy();
     CreateRandomEnemy();
@@ -22,6 +23,8 @@ void InGameState::Draw(sf::RenderWindow &window)
     window.setView(m_camera.getView());
     window.draw(m_map);
     window.draw(m_player);
+    for (auto& bull : m_playerBullets)
+        window.draw(bull);
     window.draw(m_lightMap);
     for (auto& enemy : m_enemylist)
         window.draw(enemy);
@@ -49,6 +52,8 @@ void InGameState::Update(Engine *eng, sf::Time elapTime)
     enemySpawnTimer += elapTime;
     if(enemySpawnTimer.asSeconds() > SPAWNTIME)
         CreateRandomEnemy();
+    for (auto& bull : m_playerBullets)
+        bull.update(elapTime);
     m_camera.setTargetPosition(m_player.getPosition());
     m_lightMap.update();
     CheckCollisions();
@@ -60,12 +65,16 @@ void InGameState::HandleEvent(sf::Event &event, sf::RenderWindow &window)
 {
     m_tgui.handleEvent(event);
     sf::Vector2f mousePos;
+    sf::Vector2f dir;
+    Bullet b = Bullet(sf::Vector2f(), sf::Vector2f(), m_bulletText);
     switch (event.type)
     {
         case sf::Event::MouseButtonPressed:
             mousePos = window.mapPixelToCoords
                 (sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
-            m_lightMap.AddLight(mousePos, 30.0f);
+            dir = m_player.fireDirection(mousePos);
+            b = Bullet(m_player.getPosition() + dir * 8.0f, dir * 3.0f, m_bulletText);
+            m_playerBullets.push_back(b);
             break;
         case sf::Event::MouseMoved:
             mousePos = window.mapPixelToCoords
@@ -77,6 +86,9 @@ void InGameState::HandleEvent(sf::Event &event, sf::RenderWindow &window)
             break;
         case sf::Event::KeyReleased:
             HandleKeyReleases(event.key.code);
+            break;
+        case sf::Event::LostFocus:
+            m_player.ClearVelocity();
             break;
         default:
             break;

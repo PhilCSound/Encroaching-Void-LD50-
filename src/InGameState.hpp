@@ -9,6 +9,7 @@
 #include "Map.hpp"
 #include "Camera.hpp"
 #include "Enemy.hpp"
+#include "Bullet.hpp"
 
 class InGameState : public State
 {
@@ -42,6 +43,9 @@ private:
 	//Enemys
 	std::vector<Enemy> m_enemylist;
 	sf::Texture m_enemyText;
+	//Bulletlist
+	sf::Texture m_bulletText;
+	std::vector<Bullet> m_playerBullets;
 	//Timers
 	sf::Time timeAlive;
 	sf::Time enemySpawnTimer;
