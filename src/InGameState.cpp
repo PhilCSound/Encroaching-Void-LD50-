@@ -45,6 +45,10 @@ void InGameState::Draw(sf::RenderWindow &window)
 
 void InGameState::Update(Engine *eng, sf::Time elapTime)
 {
+    timeAlive += elapTime;
+    enemySpawnTimer += elapTime;
+    if(enemySpawnTimer.asSeconds() > SPAWNTIME)
+        CreateRandomEnemy();
     m_camera.setTargetPosition(m_player.getPosition());
     m_lightMap.update();
     CheckCollisions();
@@ -182,6 +186,8 @@ sf::Vector2f InGameState::RandomPointNotNearPlayer()
 
 void InGameState::CreateRandomEnemy()
 {
+    enemySpawnTimer = sf::Time::Zero;
+    SPAWNTIME *= .98f;
     sf::Vector2f p = RandomPointNotNearPlayer();
     if(p.x < 0 || p.y < 0)
         return;

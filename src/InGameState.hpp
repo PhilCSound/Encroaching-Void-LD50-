@@ -42,6 +42,10 @@ private:
 	//Enemys
 	std::vector<Enemy> m_enemylist;
 	sf::Texture m_enemyText;
+	//Timers
+	sf::Time timeAlive;
+	sf::Time enemySpawnTimer;
+	float SPAWNTIME = 15.0f;
 
 	///
 	//	Member Functions
