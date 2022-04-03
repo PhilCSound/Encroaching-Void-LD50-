@@ -4,6 +4,7 @@ void InGameState::OnEntry(Engine *eng)
 {
     m_tgui.setTarget(eng->GetWindow());
     m_tgui.loadWidgetsFromFile("resources/gui/voidui.txt");
+    m_tgui.get<tgui::Button>("Replay")->onPress(&InGameState::Restart, this);
     m_randomGenerator.seed(std::random_device{}());
     sf::Vector2u size = eng->GetWindow().getSize();
     m_minimap.create(800, 600);
@@ -25,6 +26,8 @@ void InGameState::OnExit(Engine *eng)
 
 void InGameState::Draw(sf::RenderWindow &window)
 {
+    if(!m_player.isDead)
+    {
     window.clear(sf::Color::White); //Test
     window.setView(m_camera.getView());
     window.draw(m_map);
@@ -54,11 +57,19 @@ void InGameState::Draw(sf::RenderWindow &window)
     else
         m_tgui.get<tgui::ProgressBar>("Bless")->setValue(0);
     m_tgui.get<tgui::ProgressBar>("Fire")->setValue(100 * m_player.leftClickCD());
+    }
     m_tgui.draw();
 }
 
 void InGameState::Update(Engine *eng, sf::Time elapTime)
 {
+    if (gameOver)
+        return;
+    if(m_player.isDead)
+    {
+        GAMEOVER();
+        gameOver = true;
+    }
     timeAlive += elapTime;
     enemySpawnTimer += elapTime;
     m_player.update(elapTime);
@@ -345,5 +356,30 @@ void InGameState::UpdateShader(sf::Time dt)
     else
         m_voidShader.setUniform("iTime", shaderTime/shaderTimeInSec);
 
+}
+
+void InGameState::GAMEOVER()
+{
+    m_tgui.get<tgui::Group>("Group")->setVisible(true);
+    m_tgui.get<tgui::ChatBox>("ChatBox")->addLine("Seconds survived: " + std::to_string((int)timeAlive.asSeconds()));
+    m_tgui.get<tgui::ChatBox>("ChatBox")->addLine("Enemies Vanquished: " + std::to_string(m_player.enemiesKilled));
+}
+
+void InGameState::Restart()
+{
+    m_tgui.get<tgui::Group>("Group")->setVisible(false);
+    m_player.reset();
+    m_lightMap.restart();
+    m_enemylist.clear();
+    m_playerBullets.clear();
+	gameOver = false;
+    
+	timeAlive = sf::Time::Zero;
+	enemySpawnTimer = sf::Time::Zero;
+	SPAWNTIME = 9.0f;
+
+    CreateRandomEnemy();
+    CreateRandomEnemy();
+    CreateRandomEnemy();
 }
 

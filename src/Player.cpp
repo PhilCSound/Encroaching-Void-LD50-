@@ -92,6 +92,8 @@ float Player::getRotation() const
 void Player::AddCorruption(float amt)
 {
     corruption += amt;
+    if (corruption >= 1.0f)
+        isDead = true;
 }
 
 float Player::GetHowCorrupt()
@@ -112,6 +114,7 @@ void Player::fireRightClick()
 void Player::resetRightClick()
 {
     m_rightClick = true;
+    enemiesKilled+=1;
 }
 
 float Player::leftClickCD()
@@ -130,4 +133,20 @@ bool Player::canLeftClick()
 void Player::fireLeftClick()
 {
     m_leftTime = 0.0f;
+}
+
+void Player::reset()
+{
+    m_pos = sf::Vector2f(300.0f, 300.0f );
+    ClearVelocity();
+    m_angleLooking = 180.0f;
+    corruption = 0.0f;
+    m_rightClick = true;
+    m_leftCoolDownTime = 0.5f;
+    m_leftTime = 0.5f;
+    m_playerSprite.setOrigin(sf::Vector2f(m_playerText.getSize()) * 0.5f);
+    m_playerSprite.setPosition(m_pos);
+    m_hitbox = sf::FloatRect(m_pos.x -8, m_pos.y -8, 16.0f,16.0f);
+    enemiesKilled =0;
+    isDead = false;
 }

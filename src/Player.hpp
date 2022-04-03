@@ -25,6 +25,9 @@ public:
     float leftClickCD();
     bool canLeftClick();
     void fireLeftClick();
+    int enemiesKilled =0;
+    bool isDead = false;
+    void reset();
 private:
     float m_moveSpeed = 100.0f;
     sf::Vector2f m_pos { 300.0f, 300.0f };

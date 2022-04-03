@@ -45,6 +45,7 @@ private:
 	//Enemys
 	std::vector<Enemy> m_enemylist;
 	sf::Texture m_enemyText;
+	
 	//Bulletlist
 	sf::Texture m_bulletText;
 	std::vector<Bullet> m_playerBullets;
@@ -58,7 +59,7 @@ private:
 	sf::Shader m_voidShader;
 	float shaderTime = 0.0f;
 	float shaderTimeInSec = 60.0f;
-
+	bool gameOver = false;
 	///
 	//	Member Functions
 	///
@@ -72,4 +73,6 @@ private:
 	void FireBlaster(sf::Vector2f& direction, float mSpeed);
 	void FireCannon(sf::Vector2f direction, float mWidth);
 	void UpdateShader(sf::Time dt);
+	void GAMEOVER();
+	void Restart(); //Lord help me....
 };

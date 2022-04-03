@@ -52,3 +52,9 @@ void LightMap::draw(sf::RenderTarget& target, sf::RenderStates states) const
     target.draw(m_sprite, states);
 }
 
+void LightMap::restart()
+{
+    m_renderText.clear(sf::Color(255, 255, 255, 0));
+    m_image = m_renderText.getTexture().copyToImage();
+    m_renderText.display();
+}

@@ -10,6 +10,7 @@ public:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     bool checkCollision(sf::Vector2f pos, int radias);
     void update();
+    void restart();
 private:
     sf::RenderTexture m_renderText;
     sf::Sprite m_sprite;
