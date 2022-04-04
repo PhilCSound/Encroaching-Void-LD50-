@@ -93,7 +93,10 @@ void Player::AddCorruption(float amt)
 {
     corruption += amt;
     if (corruption >= 1.0f)
+    {
         isDead = true;
+        corruption = 1.0f;
+    }
 }
 
 float Player::GetHowCorrupt()

@@ -21,10 +21,9 @@ void InGameState::OnEntry(Engine *eng)
     m_minimap.create(800, 600);
     m_enemyText.loadFromFile("resources/gfx/voidPlayer.png");
     m_bulletText.loadFromFile("resources/gfx/Bullet.png");
-    m_noise.loadFromFile("resources/gfx/noiseTexture.png");
-    m_noise.setRepeated(true);
+    m_rnoise.loadFromFile("resources/gfx/randNoise.png");
     m_voidShader.loadFromFile("resources/shader/void.frag", sf::Shader::Fragment);
-    m_voidShader.setUniform("noiseText", m_noise);
+    m_voidShader.setUniform("noiseText", m_rnoise);
     m_voidShader.setUniform("texture", sf::Shader::CurrentTexture);
     CreateRandomEnemy();
     CreateRandomEnemy();
@@ -38,7 +37,7 @@ void InGameState::OnExit(Engine *eng)
 void InGameState::Draw(sf::RenderWindow &window)
 {
 
-    window.clear(sf::Color::White); //Test
+    window.clear(sf::Color::Black); //Test
     window.setView(m_camera.getView());
     window.draw(m_map);
     window.draw(m_player);
@@ -363,10 +362,9 @@ void InGameState::UpdateShader(sf::Time dt)
     {
         m_voidShader.setUniform("iTime", 1.0f);
         shaderTime = 0.0f;
+        return;
     }
-    else
-        m_voidShader.setUniform("iTime", shaderTime/shaderTimeInSec);
-
+    m_voidShader.setUniform("iTime", shaderTime/shaderTimeInSec);
 }
 
 void InGameState::GAMEOVER()

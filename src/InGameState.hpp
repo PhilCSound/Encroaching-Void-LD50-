@@ -56,7 +56,7 @@ private:
 	float SPAWNTIME = 9.0f;
 	bool m_drawCannonBlast = false;
 	//SHADER
-	sf::Texture m_noise;
+	sf::Texture m_rnoise;
 	sf::Shader m_voidShader;
 	float shaderTime = 0.0f;
 	float shaderTimeInSec = 60.0f;
