@@ -50,10 +50,11 @@ Group.Group {
     }
 
     ChatBox.ChatBox {
+        LineLimit = 100;
         LinesStartFromTop = false;
         NewLinesBelowOthers = true;
-        Position = (140, 260);
-        Size = (518, 132);
+        Position = (20%, 40%);
+        Size = (60%, 25%);
         TextColor = black;
         TextSize = 13;
 
@@ -98,10 +99,12 @@ Group.Group {
     }
 
     Label.GameOver {
+        HorizontalAlignment = Center;
         Position = (35%, 30%);
         Size = (30%, 10%);
         Text = "GAME OVER";
         TextSize = 36;
+        VerticalAlignment = Center;
 
         Renderer {
             BackgroundColor = transparent;
